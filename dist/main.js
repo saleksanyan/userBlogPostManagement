@@ -35,7 +35,7 @@ const blogPostController = new blog_post_controller_1.BlogPostController(
 const userController = new user_controller_1.UserController(userService);
 // Central Server
 const server = http_1.default.createServer((req, res) => {
-  console.log(`Incoming request: ${req.method} ${req.url}`); // Log request details
+  console.log(`Incoming request: ${req.method} ${req.url}`);
   const normalizedUrl = normalizeUrl(req.url);
   if (normalizedUrl === '/posts') {
     blogPostController.handleRequest(req, res);
@@ -47,7 +47,7 @@ const server = http_1.default.createServer((req, res) => {
   }
 });
 // Start server
-const PORT = 3000;
+const PORT = 3004;
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

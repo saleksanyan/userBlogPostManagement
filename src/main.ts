@@ -1,6 +1,4 @@
 import http from 'http';
-import { BlogPostService } from './application/services/blog-post/blog-post.service';
-import { UserService } from './application/services/user/user.service';
 import { InMemoryBlogPostRepository } from './infastructure/repository-handlers/blog-post-in-memory.repository-handler';
 import { InMemoryUserRepository } from './infastructure/repository-handlers/user-in-memory.repository-handler';
 import { BlogPostController } from './presentation/controllers/blog-post.controller';
@@ -13,13 +11,12 @@ const normalizeUrl = (url?: string) => url?.split('?')[0].replace(/\/$/, '');
 const blogPostRepository = new InMemoryBlogPostRepository();
 const userRepository = new InMemoryUserRepository();
 
-// Services
-const blogPostService = new BlogPostService(blogPostRepository, userRepository);
-const userService = new UserService(userRepository);
-
 // Controllers
-const blogPostController = new BlogPostController(blogPostService);
-const userController = new UserController(userService);
+const blogPostController = new BlogPostController(
+  blogPostRepository,
+  userRepository,
+);
+const userController = new UserController(userRepository);
 
 // Central Server
 const server = http.createServer((req, res) => {
@@ -37,7 +34,7 @@ const server = http.createServer((req, res) => {
 });
 
 // Start server
-const PORT = 3000;
+const PORT = 3004;
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
